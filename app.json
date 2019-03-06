@@ -1,0 +1,8 @@
+{
+    "name": "Radni nalozi",
+    "description": "Radni nalozi REST API Heroku",
+    "repository": "https://github.com/zeljko94/radni-nalozi-rest.git",
+    "logo": "",
+    "keywords": ["node", "express", "js", "mongo"],
+    "image": ""
+}
