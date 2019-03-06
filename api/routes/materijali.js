@@ -61,6 +61,31 @@ router.post('/', (req, res, next) => {
 });
 
 
+router.patch('/:id', (req, res, next) => {
+    const id = req.params.id;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+    Materijal.update({ _id: id }, { $set:  updateOps })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: "Materijal updated successfully!",
+                materijal: {
+                    _id: result._id,
+                    naziv: result.naziv,
+                    opis: result.opis,
+                    cijena: result.cijena
+                }
+            });
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
+
 router.delete('/:id', (req, res, next) => {
     Materijal.remove({ _id: req.body.id})
         .exec()
