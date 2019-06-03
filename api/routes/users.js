@@ -33,7 +33,7 @@ router.post('/signup', (req, res, next) => {
                     name: req.body.name,
                     lastname: req.body.lastname,
                     email: req.body.email,
-                    password: hash,
+                    password: req.body.password,
                     role: req.body.role
                 });
                 user.save()
@@ -47,7 +47,7 @@ router.post('/signup', (req, res, next) => {
                         res.status(500).json({error: err});
                     });
             }
-        })
+        });
     /*
     User.findOne({email: req.body.email})
         .exec()
