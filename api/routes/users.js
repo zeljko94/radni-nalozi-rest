@@ -72,6 +72,26 @@ router.post('/signup', (req, res, next) => {
 });
 
 
+router.patch('/:id', (req, res, next) => {
+    const id = req.params.id;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+    }
+    User.update({ _id: id }, { $set:  updateOps })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: "User updated successfully!",
+                user: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
+
 
 router.delete('/:userId', (req, res, next) => {
     User.deleteOne({ _id: req.params.userId})
