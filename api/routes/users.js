@@ -18,6 +18,78 @@ router.get('/', (req, res, next) => {
         });
 });
 
+router.post('/signup', (req, res, next) => {
+    User.findOne({email: req.body.email})
+        .exec()
+        .then(user => {
+            if(user){
+                return res.status(422).json({
+                    message: "Email already in use!"
+                });
+            }
+            else{
+                const user = new User({
+                    _id: new mongoose.Types.ObjectId(),
+                    name: req.body.name,
+                    lastname: req.body.lastname,
+                    email: req.body.email,
+                    password: hash,
+                    role: req.body.role
+                });
+                user.save()
+                    .then(result => {
+                        res.status(200).json({
+                            message: "User created!",
+                            user: result
+                        });
+                    })
+                    .catch(err => {
+                        res.status(500).json({error: err});
+                    });
+            }
+        })
+    /*
+    User.findOne({email: req.body.email})
+        .exec()
+        .then(user => {
+            if(user){
+                return res.status(422).json({
+                    message: "Email already in use!"
+                });
+            }
+            else{
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if(err){
+                        return res.status(500).json({error: err});
+                    }
+                    else{
+                        const user = new User({
+                            _id: new mongoose.Types.ObjectId(),
+                            name: req.body.name,
+                            lastname: req.body.lastname,
+                            username: req.body.username,
+                            email: req.body.email,
+                            password: hash,
+                            role: req.body.role
+                        });
+                        user.save()
+                            .then(result => {
+                                res.status(200).json({
+                                    message: "User created!",
+                                    user: result
+                                });
+                            })
+                            .catch(err => {
+                                res.status(500).json({error: err});
+                        });
+                    }
+                });
+
+            }
+        });
+        */
+});
+
 /*
 router.delete('/:_id', (req, res, next) => {
     const id = req.params._id;
