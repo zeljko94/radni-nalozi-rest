@@ -74,7 +74,7 @@ router.post('/signup', (req, res, next) => {
 
 
 router.delete('/:userId', (req, res, next) => {
-    User.remove({ _id: req.body.userId})
+    User.remove({ _id: new mongoose.Types.ObjectId(req.body.userId)})
         .exec()
         .then(result => {
             res.status(200).json({
