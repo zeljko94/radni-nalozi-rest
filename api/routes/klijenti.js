@@ -63,7 +63,7 @@ router.post('/', (req, res, next) => {
         });
 });
 
-
+/*
 router.delete('/:id', (req, res, next) => {
     Klijent.remove({ _id: req.body.id})
         .exec()
@@ -76,5 +76,5 @@ router.delete('/:id', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-
+*/
 module.exports = router;

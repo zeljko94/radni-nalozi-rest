@@ -18,7 +18,8 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.delete('/:_id', /*checkAuth,*/ (req, res, next) => {
+/*
+router.delete('/:_id', (req, res, next) => {
     const id = req.params._id;
     res.status(200).json({
         id: id
@@ -178,5 +179,5 @@ router.delete('/:userId', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-
+*/
 module.exports = router;
