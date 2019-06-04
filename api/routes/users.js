@@ -39,6 +39,19 @@ router.post('/login', (req, res, next) => {
         });
 });
 
+router.get('/radnici', (req, res, next) => {
+    User.find()
+        .exec()
+        .then(result => {
+            return res.status(200).json(result.filter(r => r.role.toLowerCase() == "radnik"));
+        })
+        .catch(err => {
+            return res.status(500).json({
+                error: err
+            });
+        });
+});
+
 router.post('/signup', (req, res, next) => {
     User.findOne({email: req.body.email})
         .exec()
