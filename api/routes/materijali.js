@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const Materijal = require('../models/materijal');
 
@@ -18,16 +16,13 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.delete('/:_id', /*checkAuth,*/ (req, res, next) => {
+router.delete('/:_id', (req, res, next) => {
     const id = req.params._id;
-    res.status(200).json({
-        id: id
-    });
     Materijal.deleteOne({ _id: id })
          .exec()
          .then(product => {
             res.status(200).json({
-                message: "Materijal deleted!"
+                message: "Materijal obrisan!"
             });
          })
          .catch(err => {
@@ -50,10 +45,7 @@ router.post('/', (req, res, next) => {
 
     materijal.save()
         .then(result => {
-            res.status(200).json({
-                message: "Materijal created!",
-                materijal: result
-            });
+            res.status(200).json(result);
         })
         .catch(err => {
             res.status(500).json({error: err});
@@ -70,15 +62,7 @@ router.patch('/:id', (req, res, next) => {
     Materijal.update({ _id: id }, { $set:  updateOps })
         .exec()
         .then(result => {
-            res.status(200).json({
-                message: "Materijal updated successfully!",
-                materijal: {
-                    _id: result._id,
-                    naziv: result.naziv,
-                    opis: result.opis,
-                    cijena: result.cijena
-                }
-            });
+            res.status(200).json(result);
         })
         .catch(err => {
             res.status(500).json({error: err});
