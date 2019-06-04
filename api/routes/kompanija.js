@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const Materijal = require('../models/materijal');
+const Kompanija = require('../models/kompanija');
 
 
 router.get('/', (req, res, next) => {
-    Materijal.find()
+    Kompanija.find()
         .exec()
         .then(result => {
             res.status(200).json(result);
@@ -18,16 +18,16 @@ router.get('/', (req, res, next) => {
 
 router.delete('/:_id', (req, res, next) => {
     const id = req.params._id;
-    Materijal.deleteOne({ _id: id })
+    Kompanija.deleteOne({ _id: id })
          .exec()
          .then(product => {
             res.status(200).json({
-                message: "Materijal obrisan!"
+                message: "Kompanija obrisana!"
             });
          })
          .catch(err => {
              res.status(404).json({
-                message: "Materijal not found!",
+                message: "Kompanija not found!",
                 error: err
              });
          });
@@ -36,13 +36,13 @@ router.delete('/:_id', (req, res, next) => {
 
 
 router.post('/', (req, res, next) => {
-    const materijal = new Materijal({
+    const kompanija = new Kompanija({
         _id: new mongoose.Types.ObjectId(),
         naziv: req.body.naziv,
-        cijena: req.body.cijena
+        popust: req.body.popust
     });
 
-    materijal.save()
+    kompanija.save()
         .then(result => {
             res.status(200).json(result);
         })
@@ -58,7 +58,7 @@ router.patch('/:id', (req, res, next) => {
     for(const ops of req.body){
         updateOps[ops.propName] = ops.value;
     }
-    Materijal.update({ _id: id }, { $set:  updateOps })
+    Kompanija.update({ _id: id }, { $set:  updateOps })
         .exec()
         .then(result => {
             res.status(200).json(result);
@@ -70,11 +70,11 @@ router.patch('/:id', (req, res, next) => {
 
 
 router.delete('/:id', (req, res, next) => {
-    Materijal.remove({ _id: req.body.id})
+    Kompanija.remove({ _id: req.body.id})
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Materijal deleted"
+                message: "Kompanija obrisana!"
             });
         })
         .catch(err => {
