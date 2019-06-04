@@ -10,10 +10,6 @@ const radniNalogSchema = mongoose.Schema({
     datumZavrsetka: { type: Date },
     total: { type: Number },
     napomena: {type: String },
-    /*
-    stvarniDatumPocetka: { type: Date },
-    stvarniDatumZavrsetka: { type: Date },
-    */
     datumKreiranja: { type: Date },
     sifra: { type: String },
     kreatorID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
