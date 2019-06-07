@@ -7,8 +7,16 @@ const User = require('../models/user');
 const Klijent = require('../models/klijent');
 
 router.post('/', (req, res, next) => {
-    
-    res.status(200).json("OK");
+    const nalog = req.body;
+    const izvrsitelji = nalog.izvrsitelji.map(n => n.uid);
+    const stavke      = nalog.materijali;
+    const klijent     = nalog.klijent;
+
+    res.status(200).json({
+        izvrsitelji: izvrsitelji,
+        stavke: stavke,
+        klijent: klijent
+    })
 });
 
 /*
