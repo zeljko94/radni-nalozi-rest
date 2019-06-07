@@ -10,6 +10,7 @@ const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
     const materijali  = req.body.materijali;
+    var izv = [];
 
     const radniNalog = new RadniNalog({
         _id:   new mongoose.Types.ObjectId(),
@@ -23,20 +24,19 @@ router.post('/', (req, res, next) => {
     });
 
 
-    var izv = [];
-    for(var i=0; i<izvrsitelji.length; i++){
-        const izvrsitelj = new RadniNalogIzvrsitelj({
-            _id: new mongoose.Types.ObjectId(),
-            radniNalogID: radniNalog._id,
-            korisnikID: izvrsitelj[i].uid
-        });
-        izv.push(izvrsitelj);
-    }
-
     res.status(200).json({
         nalog: radniNalog,
         izvrsitelji: izv
     });
+
+    for(var i=0; i<izvrsitelji.length; i++){
+        const izvrsitelj = new RadniNalogIzvrsitelj({
+            _id: new mongoose.Types.ObjectId(),
+            radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
+            korisnikID: new mongoose.Types.ObjectId(izvrsitelj[i].uid)
+        });
+        izv.push(izvrsitelj);
+    }
 });
 
 /*
