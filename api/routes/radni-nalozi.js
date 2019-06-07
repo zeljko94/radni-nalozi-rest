@@ -7,7 +7,8 @@ const User = require('../models/user');
 const Klijent = require('../models/klijent');
 
 router.post('/', (req, res, next) => {
-    console.log(req.body);
+    
+    res.status(200).json("OK");
 });
 
 /*
