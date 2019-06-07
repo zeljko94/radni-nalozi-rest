@@ -43,8 +43,8 @@ router.post('/', (req, res, next) => {
         const stavka = new RadniNalogMaterijal({
             _id: new mongoose.Types.ObjectId(),
             kolicina: stavke[i].kolicina,
-            radniNalogID: radniNalog._id,
-            materijalID: stavke[i].materijal.uid
+            radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
+            materijalID: new mongoose.Types.ObjectId(stavke[i].materijal.uid)
         });
         stvk.push(stavka);
     }
@@ -53,7 +53,7 @@ router.post('/', (req, res, next) => {
     res.status(200).json({
         nalog: radniNalog,
         izvrsitelji: izv,
-        stavke: 
+        stavke: stvk
     });
 
 
