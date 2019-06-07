@@ -24,10 +24,6 @@ router.post('/', (req, res, next) => {
     });
 
 
-    res.status(200).json({
-        nalog: radniNalog,
-        izvrsitelji: izv
-    });
 
     for(var i=0; i<izvrsitelji.length; i++){
         const izvrsitelj = new RadniNalogIzvrsitelj({
@@ -37,6 +33,12 @@ router.post('/', (req, res, next) => {
         });
         izv.push(izvrsitelj);
     }
+
+    
+    res.status(200).json({
+        nalog: radniNalog,
+        izvrsitelji: izv
+    });
 });
 
 /*
