@@ -7,7 +7,8 @@ const User = require('../models/user');
 const Klijent = require('../models/klijent');
 
 router.post('/', (req, res, next) => {
-    res.status(200).json(req.body);
+    const izvrsitelji = req.body.izvrsitelji;
+    res.status(200).json(izvrsitelji);
     /*
     const nalog       = req.body;
     const izvrsitelji = nalog.izvrsitelji.map(n => n.uid);
