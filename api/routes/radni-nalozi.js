@@ -29,7 +29,7 @@ router.post('/', (req, res, next) => {
         const izvrsitelj = new RadniNalogIzvrsitelj({
             _id: new mongoose.Types.ObjectId(),
             radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
-            korisnikID: new mongoose.Types.ObjectId(izvrsitelj[i].uid)
+            korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
         });
         izv.push(izvrsitelj);
     }
