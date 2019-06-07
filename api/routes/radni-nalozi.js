@@ -5,22 +5,38 @@ const mongoose = require('mongoose');
 const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 const Klijent = require('../models/klijent');
+const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
-    res.status(200).json(izvrsitelji);
-    /*
-    const nalog       = req.body;
-    const izvrsitelji = nalog.izvrsitelji.map(n => n.uid);
-    const stavke      = nalog.materijali;
-    const klijent     = nalog.klijent;
+    const materijali  = req.body.materijali;
+
+    const radniNalog = new RadniNalog({
+        _id:   new mongoose.Types.ObjectId(),
+        naziv: req.body.naziv,
+        opis:  req.body.opis,
+        datumPocetka: req.body.datumPocetka,
+        datumZavrsetka: req.body.datumZavrsetka,
+        total: req.body.total,
+        napomena: req.body.napomena,
+        datumKreiranja: new Date()
+    });
+
+
+    var izv = [];
+    for(var i=0; i<izvrsitelji.length; i++){
+        const izvrsitelj = new RadniNalogIzvrsitelj({
+            _id: new mongoose.Types.ObjectId(),
+            radniNalogID: radniNalog._id,
+            korisnikID: izvrsitelj[i].uid
+        });
+        izv.push(izvrsitelj);
+    }
 
     res.status(200).json({
-        izvrsitelji: izvrsitelji,
-        stavke: stavke,
-        klijent: klijent
-    })
-    */
+        nalog: radniNalog,
+        izvrsitelji: izv
+    });
 });
 
 /*

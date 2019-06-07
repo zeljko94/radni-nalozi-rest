@@ -11,8 +11,7 @@ const radniNalogSchema = mongoose.Schema({
     total: { type: Number },
     napomena: {type: String },
     datumKreiranja: { type: Date },
-    sifra: { type: String },
-    kreatorID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    //kreatorID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 });
 
 
