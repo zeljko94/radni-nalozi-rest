@@ -6,7 +6,7 @@ const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
-const RadniNalogIMaterijal = require('../models/radni-nalog-materijal');
+const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
