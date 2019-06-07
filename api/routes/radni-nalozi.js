@@ -6,11 +6,13 @@ const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
+const RadniNalogIMaterijal = require('../models/radni-nalog-materijal');
 
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
-    const materijali  = req.body.materijali;
+    const stavke  = req.body.materijali;
     var izv = [];
+    var stvk = [];
 
     const radniNalog = new RadniNalog({
         _id:   new mongoose.Types.ObjectId(),
@@ -22,7 +24,7 @@ router.post('/', (req, res, next) => {
         napomena: req.body.napomena,
         datumKreiranja: new Date()
     });
-
+    radniNalog.save();
 
 
     for(var i=0; i<izvrsitelji.length; i++){
@@ -32,13 +34,29 @@ router.post('/', (req, res, next) => {
             korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
         });
         izv.push(izvrsitelj);
+        izv.save()
+            .then(result => {})
+            .catch(err => {});
+    }
+
+    for(var i=0; i<stavke.length; i++){
+        const stavka = new RadniNalogMaterijal({
+            _id: new mongoose.Types.ObjectId(),
+            kolicina: stavke[i].kolicina,
+            radniNalogID: radniNalog._id,
+            materijalID: stavke[i].materijal.uid
+        });
+        stvk.push(stavka);
     }
 
     
     res.status(200).json({
         nalog: radniNalog,
-        izvrsitelji: izv
+        izvrsitelji: izv,
+        stavke: 
     });
+
+
 });
 
 /*
