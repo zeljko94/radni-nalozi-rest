@@ -6,7 +6,11 @@ const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 const Klijent = require('../models/klijent');
 
+router.post('/', (req, res, next) => {
+    console.log(req.body);
+});
 
+/*
 router.get('/', (req, res, next) => {
     RadniNalog.find()
         .populate('kreatorID')
@@ -20,7 +24,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.delete('/:_id', /*checkAuth,*/ (req, res, next) => {
+router.delete('/:_id',  (req, res, next) => {
     const id = req.params._id;
     res.status(200).json({
         id: id
@@ -70,7 +74,9 @@ router.post('/', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
+*/
 
+/*
 router.post('/create', (req, res, next) => {
     const radniNalog = new RadniNalog({
         _id: new mongoose.Types.ObjectId(),
@@ -88,34 +94,6 @@ router.post('/create', (req, res, next) => {
         klijentID: req.body.klijentID,
     });
     
-    /*
-    const radniNalog = new RadniNalog({
-        _id: new mongoose.Types.ObjectId(),
-        naziv: req.body.naziv,
-        napomena: req.body.napomena,
-        datumKreiranja: new Date(),
-        planiraniDatumPocetka: req.body.planiraniDatumPocetka,
-        planiraniDatumZavrsetka: req.body.planiraniDatumZavrsetka,
-        stvarniDatumPocetka: req.body.stvarniDatumPocetka,
-        stvarniDatumZavrsetka: req.body.stvarniDatumZavrsetka,
-        brojNaloga: req.body.brojNaloga,
-        total: req.body.total,
-        opis: req.body.opis,
-        kreatorID: req.body.kreatorID,
-        klijentID: req.body.klijentID,
-    });
-
-    radniNalog.save()
-        .then(result => {
-            res.status(200).json({
-                message: "Radni nalog created!",
-                radniNalog: result
-            });
-        })
-        .catch(err => {
-            res.status(500).json({error: err});
-        });
-        */
 });
 
 
@@ -131,5 +109,5 @@ router.delete('/:id', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-
+*/
 module.exports = router;
