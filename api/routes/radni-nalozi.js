@@ -87,7 +87,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.delete('/drop',  (req, res, next) => {
-    RadniNalog.drop()
+    RadniNalog.deleteMany()
         .then(result => {
             res.status(200).json(result);
         })
