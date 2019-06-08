@@ -8,49 +8,23 @@ const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
-/*
+
 function getRadniNalog(uid){
-    var nalog = {};
-    var izvrsitelji = [];
-    var materijali = [];
-
     return RadniNalog.find({ _id: uid })
-        //.populate('klijentID')
         .exec()
-        .then(result => {
-            nalog = result;
-
-            RadniNalogIzvrsitelj.find({ radniNalogID: uid })
-            //.populate('korisnikID')
-            .exec()
-            .then(result => {
-                izvrsitelji = result;
-
-                RadniNalogMaterijal.find({ radniNalogID: uid })
-                //.populate('materijalID')
-                .exec()
-                .then(result => {
-                    materijali = result;
-
-                    return {
-                        nalog: nalog,
-                        materijali: materijali,
-                        izvrsitelji: izvrsitelji
-                    };
+        .then(nalog => {
+            return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).exec()
+                .then(izvrsitelji => {
+                    return {nalog: nalog, izvrsitelji: izvrsitelji};
                 })
                 .catch(err => {
                     return null;
                 });
-
-            })
-            .catch(err => {
-                return null;
-            });
         })
-        .catch(err => {
+        .catch(err =>  {
             return null;
         });
-}*/
+}
 
 function getNaloge(){
     return RadniNalog.find().exec()
@@ -123,18 +97,9 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    var result = [];
-    RadniNalog.find().exec()
-        .then(nalozi => {
-            for(var i=0; i<nalozi.length; i++){
-                result.push(nalozi[i]._id);
-            }
-
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
+    getRadniNalog("5cfb9937f14cef0004f01695")
+        .then(result => { res.status(200).json(result); })
+        .catch(err => { res.status(500).json(err);});
 });
 
 
