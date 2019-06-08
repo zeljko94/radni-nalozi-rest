@@ -15,14 +15,15 @@ function getRadniNalog(uid){
         .then(nalog => {
             return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).exec()
                 .then(izvrsitelji => {
-                    return {nalog: nalog, izvrsitelji: izvrsitelji};
-                })
-                .catch(err => {
-                    return err;
+                    return RadniNalogMaterijal.find({ radniNalogID: uid }).exec()
+                        .then(materijali => {
+                            return {
+                                nalog: nalog,
+                                izvrsitelji: izvrsitelji,
+                                materijali: materijali
+                            };
+                        });
                 });
-        })
-        .catch(err =>  {
-            return err;
         });
 }
 
