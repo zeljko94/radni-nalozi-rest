@@ -108,10 +108,7 @@ router.get('/', (req, res, next) => {
     RadniNalog.find()
         .exec()
         .then(nalozi => {
-            processNalozi(nalozi)
-                .then(nalozi => {
-                    res.status(200).json(nalozi);
-                });
+            res.status(200).json(nalozi);
         })
         .catch(err => {
             res.status(500).json({error: err});
