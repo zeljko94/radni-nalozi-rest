@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
             korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
         });
         izv.push(izvrsitelj);
-        izv.save()
+        izvrsitelj.save()
             .then(result => {})
             .catch(err => {});
     }
