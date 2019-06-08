@@ -27,20 +27,6 @@ function getRadniNalog(uid){
         });
 }
 
-function getNaloge(){
-     return RadniNalog.find().exec()
-        .then(result => { 
-            var list = [];
-            for(var i=0; i<result.length; i++){
-                getRadniNalog(result[i]._id)
-                    .then(nalog => {
-                         list.push(nalog); 
-                    });
-            }
-
-            return list;
-         });
-}
 
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
@@ -106,12 +92,27 @@ router.post('/', (req, res, next) => {
     
 });
 
+function getVal(val){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => { resolve(val); }, 1000);
+    });
+}
+
+function getRadneNaloge(){
+    var list = [];
+    for(var i=0; i<3; i++){
+        getVal(i).then(val => {
+            list.push(val);
+        });
+    }
+    return list;
+}
+
 
 router.get('/', (req, res, next) => {
-    getNaloge()
-        .then(nalozi => {
-            res.status(200).json(nalozi);
-        });
+    var list = getRadneNaloge();
+    res.status(200).json(list);
+        
 });
 
 
