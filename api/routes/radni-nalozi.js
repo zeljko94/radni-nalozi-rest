@@ -32,23 +32,23 @@ function getRadniNalog(uid){
                 .then(result => {
                     materijali = result;
 
-                    return res.status(200).json({
+                    return {
                         nalog: nalog,
                         materijali: materijali,
                         izvrsitelji: izvrsitelji
-                    });
+                    };
                 })
                 .catch(err => {
-                    return res.status(500).json(err);
+                    return null;
                 });
 
             })
             .catch(err => {
-                return res.status(500).json(err);
+                return null;
             });
         })
         .catch(err => {
-            return res.status(500).json(err);
+            return null;
         });
 }
 
