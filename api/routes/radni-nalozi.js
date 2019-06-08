@@ -96,7 +96,7 @@ function processNalozi(array) {
     var list = [];
     return new Promise((async function(resolve){
         for (const item of array) {
-            var x = await getData(item);
+            var x = await getRadniNalog(item._id);
             list.push(x);
           }
           resolve(list);
@@ -108,7 +108,10 @@ router.get('/', (req, res, next) => {
     RadniNalog.find()
         .exec()
         .then(nalozi => {
-            res.status(200).json(nalozi);
+            processNalozi(nalozi)
+                .then(nalozi => {
+                    res.status(200).json(nalozi);
+                });
         })
         .catch(err => {
             res.status(500).json({error: err});
