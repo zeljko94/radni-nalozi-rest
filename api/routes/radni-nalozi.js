@@ -26,11 +26,6 @@ router.post('/', (req, res, next) => {
     });
     radniNalog.save();
     
-    res.status(200).json({
-        nalog: radniNalog,
-        izvrsitelji: izv,
-        stavke: stavke
-    });
 
 
     for(var i=0; i<izvrsitelji.length; i++){
@@ -44,6 +39,13 @@ router.post('/', (req, res, next) => {
             .then(result => {})
             .catch(err => {});
     }
+
+    
+    res.status(200).json({
+        nalog: radniNalog,
+        izvrsitelji: izv,
+        stavke: stavke
+    });
 
 /*
     for(var i=0; i<stavke.length; i++){
