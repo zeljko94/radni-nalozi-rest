@@ -74,12 +74,38 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
+    var nalog = {};
+    var izvrsitelji = [];
+    var materijali = [];
+
     RadniNalog.find()
         //.populate('kreatorID')
-        //.populate('klijentID')
+        .populate('klijentID')
         .exec()
         .then(result => {
-            res.status(200).json(result);
+            nalog = result;
+            RadniNalogMaterijal.find({ radniNalogID: nalog._id })
+            .exec()
+            .then(result => {
+                materijali = result;
+
+                RadniNalogIzvrsitelj.find()
+                .exec()
+                .then(result => {
+                    izvrsitelji = result;
+
+                    res.status(200).json({
+                        nalog: nalog,
+                        materijali: materijali,
+                        izvrsitelji: izvrsitelji
+                    });
+                })
+                .catch(err => {});
+            })
+            .catch(err => {
+                res.status(500).json({error: err});
+            });
+
         })
         .catch(err => {
             res.status(500).json({error: err});
