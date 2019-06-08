@@ -8,7 +8,7 @@ const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
-
+/*
 function getRadniNalog(uid){
     var nalog = {};
     var izvrsitelji = [];
@@ -50,6 +50,11 @@ function getRadniNalog(uid){
         .catch(err => {
             return null;
         });
+}*/
+
+function getNaloge(){
+    return RadniNalog.find().exec()
+        .then(result => { return result; }).catch(err => { return null; });
 }
 
 router.post('/', (req, res, next) => {
@@ -118,16 +123,22 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    
+    RadniNalog.find({ _id: "5cfb9937f14cef0004f01695" })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+    /*
     var result = [];
 
     RadniNalog.find().exec()
         .then(nalozi => {
             for(var i=0; i<nalozi.length; i++){
-                getRadniNalog(nalozi[i]._id)
-                    .then(nalog => {
-                        result.push(nalog);
-                    });
+                result.push(getRadniNalog(nalozi[i]._id));
+                //result.push(nalozi[i]);
             }
 
             res.status(200).json(result);
@@ -135,7 +146,7 @@ router.get('/', (req, res, next) => {
         .catch(err => {
             res.status(500).json(err);
         });
-        
+        */
 });
 
 
