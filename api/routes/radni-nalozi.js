@@ -24,7 +24,13 @@ router.post('/', (req, res, next) => {
         napomena: req.body.napomena,
         datumKreiranja: new Date()
     });
-    radniNalog.save();
+    radniNalog.save()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
     
 
 
