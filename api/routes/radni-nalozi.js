@@ -28,48 +28,48 @@ router.post('/', (req, res, next) => {
     });
     radniNalog.save()
         .then(result => {
-            res.status(200).json(result);
+            for(var i=0; i<izvrsitelji.length; i++){
+                const izvrsitelj = new RadniNalogIzvrsitelj({
+                    _id: new mongoose.Types.ObjectId(),
+                    radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
+                    korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
+                });
+                izv.push(izvrsitelj);
+            }
+            RadniNalogIzvrsitelj.insertMany(izv)
+                .then(result => {
+                    for(var i=0; i<stavke.length; i++){
+                        const stavka = new RadniNalogMaterijal({
+                            _id: new mongoose.Types.ObjectId(),
+                            kolicina: stavke[i].kolicina,
+                            radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
+                            materijalID: new mongoose.Types.ObjectId(stavke[i].materijal.uid)
+                        });
+                        stvk.push(stavka);
+                    }
+                
+                    RadniNalogMaterijal.insertMany(stvk)
+                        .then(result => {
+                            res.status(200).json({
+                                nalog: radniNalog,
+                                izvrsitelji: izv,
+                                stavke: stavke
+                            });
+                        })
+                        .catch(err => {
+
+                        });
+                })
+                .catch(err => {
+
+                });
+            
+        
         })
         .catch(err => {
             res.status(200).json(err);
         });
     
-
-
-    for(var i=0; i<izvrsitelji.length; i++){
-        const izvrsitelj = new RadniNalogIzvrsitelj({
-            _id: new mongoose.Types.ObjectId(),
-            radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
-            korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
-        });
-        izv.push(izvrsitelj);
-        izvrsitelj.save()
-            .then(result => {})
-            .catch(err => {});
-    }
-
-    
-
-
-    for(var i=0; i<stavke.length; i++){
-        const stavka = new RadniNalogMaterijal({
-            _id: new mongoose.Types.ObjectId(),
-            kolicina: stavke[i].kolicina,
-            radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
-            materijalID: new mongoose.Types.ObjectId(stavke[i].materijal.uid)
-        });
-        stvk.push(stavka);
-        stavka.save();
-    }
-
-    /*
-    res.status(200).json({
-        nalog: radniNalog,
-        izvrsitelji: izv,
-        stavke: stavke
-    });
-*/
-
 });
 
 
