@@ -93,11 +93,15 @@ router.post('/', (req, res, next) => {
 });
 
 
-
 router.get('/', (req, res, next) => {
-    getRadniNalog("5cfb9937f14cef0004f01695")
-        .then(nalog => {
-            res.status(200).json(nalog);
+    var list = [];
+    RadniNalog.find().exec()
+        .then(nalozi => {
+            for(var i=0; i<nalozi.length; i++){
+                var nalog = await getRadniNalog(nalozi[i]._id);
+                list.push(nalog);
+            }
+            res.status(200).json(list);
         });
 });
 
