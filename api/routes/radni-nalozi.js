@@ -123,7 +123,8 @@ router.get('/', (req, res, next) => {
     RadniNalog.find().exec()
         .then(nalozi => {
             for(var i=0; i<nalozi.length; i++){
-                result.push(getRadniNalog(nalozi[i]._id));
+                //result.push(getRadniNalog(nalozi[i]._id));
+                result.push(nalozi[i]);
             }
 
             res.status(200).json(result);
