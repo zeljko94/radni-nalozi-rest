@@ -11,6 +11,7 @@ const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
     const stavke  = req.body.materijali;
+    const klijent = req.body.klijent;
     var izv = [];
     var stvk = [];
 
@@ -22,7 +23,8 @@ router.post('/', (req, res, next) => {
         datumZavrsetka: req.body.datumZavrsetka,
         total: req.body.total,
         napomena: req.body.napomena,
-        datumKreiranja: new Date()
+        datumKreiranja: new Date(),
+        klijentID: klijent.uid
     });
     radniNalog.save()
         .then(result => {
