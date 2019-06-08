@@ -180,7 +180,7 @@ router.delete('/:id', (req, res, next) => {
                     RadniNalogMaterijal.deleteMany({ radniNalogID: id })
                         .exec()
                         .then(result => {
-
+                            res.status(200).json(id);
                         })
                         .catch(err => {
                             res.status(500).json({error: err});
