@@ -123,7 +123,7 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    RadniNalog.find({ _id: "5cfb9937f14cef0004f01695" })
+    RadniNalog.find({ _id: "a5cfb9937f14cef0004f01695" })
         .exec()
         .then(result => {
             res.status(200).json(result);
