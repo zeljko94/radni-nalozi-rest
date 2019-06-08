@@ -89,7 +89,7 @@ router.post('/', (req, res, next) => {
 
                             getRadniNalog(radniNalog._id)
                                 .then(nalogObj => {
-                                    res.status(200).json({nalogObj});
+                                    res.status(200).json(nalogObj);
                                 });
                         })
                         .catch(err => {
