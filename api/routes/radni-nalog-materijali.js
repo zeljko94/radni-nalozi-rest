@@ -17,6 +17,16 @@ router.get('/', (req, res, next) => {
     });
 });
 
+
+router.delete('/drop', (req, res, next) => {
+    RadniNalogMaterijal.deleteMany()
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
 /*
 router.get('/:radniNalogID', (req, res, next) => {
     const radniNalogID = req.params.radniNalogID;
