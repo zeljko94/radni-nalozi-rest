@@ -169,7 +169,7 @@ router.delete('/drop',  (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-    const id = req.body.id;
+    const id = req.params.id;
     RadniNalog.deleteMany({ _id: id})
         .exec()
         .then(result => {
