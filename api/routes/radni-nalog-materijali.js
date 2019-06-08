@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const RadniNalogMaterijal = require('../models/radni-nalog-izvrsitelj');
+const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 const RadniNalog = require('../models/radni-nalog');
 const Materijal = require('../models/materijal');
 
