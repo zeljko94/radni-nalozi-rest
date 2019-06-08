@@ -25,7 +25,7 @@ function transform(data){
 }
 
 function getRadniNalog(uid){
-    return RadniNalog.find({ _id: uid })
+    return RadniNalog.findOne({ _id: uid })
         .populate('klijentID')
         .exec()
         .then(nalog => {
