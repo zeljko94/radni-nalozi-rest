@@ -85,29 +85,19 @@ router.get('/', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-/*
-router.delete('/:_id',  (req, res, next) => {
-    const id = req.params._id;
-    res.status(200).json({
-        id: id
-    });
-    RadniNalog.deleteOne({ _id: id })
-         .exec()
-         .then(product => {
-            res.status(200).json({
-                message: "Radni nalog deleted!"
-            });
-         })
-         .catch(err => {
-             res.status(404).json({
-                message: "Radni nalog not found!",
-                error: err
-             });
-         });
+
+router.delete('/drop',  (req, res, next) => {
+    RadniNalog.drop()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
 });
 
 
-
+/*
 router.post('/', (req, res, next) => {
     const radniNalog = new RadniNalog({
         _id: new mongoose.Types.ObjectId(),
