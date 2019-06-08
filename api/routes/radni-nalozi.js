@@ -28,8 +28,18 @@ function getRadniNalog(uid){
 }
 
 function getNaloge(){
-    return RadniNalog.find().exec()
-        .then(result => { return result; }).catch(err => { return null; });
+     return RadniNalog.find().exec()
+        .then(result => { 
+            var list = [];
+            for(var i=0; i<result.length; i++){
+                getRadniNalog(result[i]._id)
+                    .then(nalog => {
+                         list.push(nalog); 
+                    });
+            }
+
+            return list;
+         });
 }
 
 router.post('/', (req, res, next) => {
@@ -98,9 +108,10 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    getRadniNalog("5cfb9937f14cef0004f01695")
-        .then(result => { res.status(200).json(result); })
-        .catch(err => { res.status(500).json(err);});
+    getNaloge()
+        .then(nalozi => {
+            res.status(200).json(nalozi);
+        });
 });
 
 
