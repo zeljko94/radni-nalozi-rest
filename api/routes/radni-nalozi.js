@@ -97,10 +97,9 @@ router.get('/', (req, res, next) => {
     var list = [];
     RadniNalog.find().exec()
         .then(nalozi => {
-            for(var i=0; i<nalozi.length; i++){
-                var nalog = await getRadniNalog(nalozi[i]._id);
-                list.push(nalog);
-            }
+            nalozi.forEach((item, i) => {
+                list.push(getRadniNalog(item._id));
+            });
             res.status(200).json(list);
         });
 });
