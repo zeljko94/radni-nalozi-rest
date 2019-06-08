@@ -7,6 +7,19 @@ const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 
 
+router.get('', (req, res, next) => {
+    const radniNalogID = req.params.radniNalogID;
+    RadniNalogIzvrsitelj.find()
+    .exec()
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+/*
 router.get('/:radniNalogID', (req, res, next) => {
     const radniNalogID = req.params.radniNalogID;
     RadniNalogIzvrsitelj.find({
@@ -21,7 +34,7 @@ router.get('/:radniNalogID', (req, res, next) => {
     });
 });
 
-router.delete('/:_id', /*checkAuth,*/ (req, res, next) => {
+router.delete('/:_id', (req, res, next) => {
     const id = req.params._id;
     res.status(200).json({
         id: id
@@ -75,5 +88,5 @@ router.delete('/:id', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-
+*/
 module.exports = router;
