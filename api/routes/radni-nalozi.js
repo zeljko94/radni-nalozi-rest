@@ -123,22 +123,11 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    RadniNalog.find({ _id: "a5cfb9937f14cef0004f01695" })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
-    /*
     var result = [];
-
     RadniNalog.find().exec()
         .then(nalozi => {
             for(var i=0; i<nalozi.length; i++){
-                result.push(getRadniNalog(nalozi[i]._id));
-                //result.push(nalozi[i]);
+                result.push(nalozi[i]._id);
             }
 
             res.status(200).json(result);
@@ -146,7 +135,6 @@ router.get('/', (req, res, next) => {
         .catch(err => {
             res.status(500).json(err);
         });
-        */
 });
 
 
