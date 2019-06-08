@@ -8,7 +8,7 @@ const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
-
+/*
 function getRadniNalog(uid){
     var nalog = {};
     var izvrsitelji = [];
@@ -50,6 +50,11 @@ function getRadniNalog(uid){
         .catch(err => {
             return null;
         });
+}*/
+
+function getNaloge(){
+    return RadniNalog.find().exec()
+        .then(result => { return result; }).catch(err => { return null; });
 }
 
 router.post('/', (req, res, next) => {
@@ -118,6 +123,10 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
+    getNaloge().then(nalozi => {
+        res.status(200).json(nalozi);
+    });
+    /*
     var result = [];
 
     RadniNalog.find().exec()
@@ -132,6 +141,7 @@ router.get('/', (req, res, next) => {
         .catch(err => {
             res.status(500).json(err);
         });
+        */
 });
 
 
