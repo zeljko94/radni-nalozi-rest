@@ -8,6 +8,50 @@ const Klijent = require('../models/klijent');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
+
+function getRadniNalog(uid){
+    var nalog = {};
+    var izvrsitelji = [];
+    var materijali = [];
+
+    RadniNalog.find({ _id: uid })
+        .populate('klijentID')
+        .exec()
+        .then(result => {
+            nalog = result;
+
+            RadniNalogIzvrsitelj.find({ radniNalogID: uid })
+            .populate('korisnikID')
+            .exec()
+            .then(result => {
+                izvrsitelji = result;
+
+                RadniNalogMaterijal.find({ radniNalogID: uid })
+                .populate('materijalID')
+                .exec()
+                .then(result => {
+                    materijali = result;
+
+                    return res.status(200).json({
+                        nalog: nalog,
+                        materijali: materijali,
+                        izvrsitelji: izvrsitelji
+                    });
+                })
+                .catch(err => {
+                    return res.status(500).json(err);
+                });
+
+            })
+            .catch(err => {
+                return res.status(500).json(err);
+            });
+        })
+        .catch(err => {
+            return res.status(500).json(err);
+        });
+}
+
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
     const stavke  = req.body.materijali;
@@ -74,41 +118,18 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    var nalog = {};
-    var izvrsitelji = [];
-    var materijali = [];
+    var result = [];
 
-    RadniNalog.find()
-        //.populate('kreatorID')
-        .populate('klijentID')
-        .exec()
-        .then(result => {
-            nalog = result;
-            RadniNalogMaterijal.find({ radniNalogID: nalog._id })
-            .exec()
-            .then(result => {
-                materijali = result;
+    RadniNalog.find().exec()
+        .then(nalozi => {
+            for(var i=0; i<nalozi.length; i++){
+                result.push(getRadniNalog(nalozi[i]._id));
+            }
 
-                RadniNalogIzvrsitelj.find()
-                .exec()
-                .then(result => {
-                    izvrsitelji = result;
-
-                    res.status(200).json({
-                        nalog: nalog,
-                        materijali: materijali,
-                        izvrsitelji: izvrsitelji
-                    });
-                })
-                .catch(err => {});
-            })
-            .catch(err => {
-                res.status(500).json({error: err});
-            });
-
+            res.status(200).json(result);
         })
         .catch(err => {
-            res.status(500).json({error: err});
+            res.status(500).json(err);
         });
 });
 
