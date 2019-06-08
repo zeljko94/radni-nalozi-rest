@@ -52,6 +52,23 @@ router.post('/', (req, res, next) => {
 });
 
 
+router.post('/many', (req, res, next) => {
+    const materijal = new Materijal({
+        _id: new mongoose.Types.ObjectId(),
+        naziv: req.body.naziv,
+        cijena: req.body.cijena
+    });
+
+    materijal.save()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
+
 router.patch('/:id', (req, res, next) => {
     const id = req.params.id;
     const updateOps = {};
