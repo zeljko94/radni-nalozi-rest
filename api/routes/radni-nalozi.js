@@ -97,6 +97,7 @@ router.get('/', (req, res, next) => {
     var dict = {};
     RadniNalogMaterijal.find().exec()
         .then(materijali => {
+            res.status(200).json(materijali);
             for(var i=0; i<materijali.length; i++){
                 if(!dict.hasOwnProperty(materijali[i].radniNalogID)){
                     dict[materijali[i].radniNalogID].materijali = [];
