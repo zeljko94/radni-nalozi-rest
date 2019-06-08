@@ -92,27 +92,13 @@ router.post('/', (req, res, next) => {
     
 });
 
-function getVal(val){
-    return new Promise((resolve, reject) => {
-        setTimeout(() => { resolve(val); }, 1000);
-    });
-}
-
-function getRadneNaloge(){
-    var list = [];
-    return new Promise((resolve, reject) => {
-        for(var i=0; i<3; i++){
-            getVal(i).then(val => {
-                list.push(val);
-            });
-        }
-        resolve(list);
-    });
-}
 
 
 router.get('/', (req, res, next) => {
-    getRadneNaloge().then(nalozi => {  res.status(200).json(nalozi); });
+    getRadniNalog("5cfb9937f14cef0004f01695")
+        .then(nalog => {
+            res.status(200).json(nalog);
+        });
 });
 
 
