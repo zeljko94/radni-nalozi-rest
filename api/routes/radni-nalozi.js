@@ -168,6 +168,34 @@ router.delete('/drop',  (req, res, next) => {
         });
 });
 
+router.delete('/:id', (req, res, next) => {
+    const id = req.body.id;
+    RadniNalog.deleteMany({ _id: id})
+        .exec()
+        .then(result => {
+            RadniNalogIzvrsitelj.deleteMany({ radniNalogID: id})
+                .exec()
+                .then(result => {
+
+                    RadniNalogMaterijal.deleteMany({ radniNalogID: id })
+                        .exec()
+                        .then(result => {
+
+                        })
+                        .catch(err => {
+                            res.status(500).json({error: err});
+                        });
+
+                })
+                .catch(err => {
+                    res.status(500).json({error: err});
+                });
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
 
 /*
 router.post('/', (req, res, next) => {
