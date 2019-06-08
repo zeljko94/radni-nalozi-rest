@@ -51,6 +51,7 @@ router.post('/', (req, res, next) => {
             materijalID: new mongoose.Types.ObjectId(stavke[i].materijal.uid)
         });
         stvk.push(stavka);
+        stavka.save();
     }
 
     
