@@ -19,11 +19,11 @@ function getRadniNalog(uid){
                     return {nalog: nalog, izvrsitelji: izvrsitelji};
                 })
                 .catch(err => {
-                    return null;
+                    return err;
                 });
         })
         .catch(err =>  {
-            return null;
+            return err;
         });
 }
 
