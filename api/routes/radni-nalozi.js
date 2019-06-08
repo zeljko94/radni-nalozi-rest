@@ -100,12 +100,14 @@ function getVal(val){
 
 function getRadneNaloge(){
     var list = [];
-    for(var i=0; i<3; i++){
-        getVal(i).then(val => {
-            list.push(val);
-        });
-    }
-    return list;
+    return new Promise((resolve, reject) => {
+        for(var i=0; i<3; i++){
+            getVal(i).then(val => {
+                list.push(val);
+            });
+        }
+        resolve(list);
+    });
 }
 
 
