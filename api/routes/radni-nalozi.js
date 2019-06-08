@@ -15,19 +15,19 @@ function getRadniNalog(uid){
     var materijali = [];
 
     RadniNalog.find({ _id: uid })
-        .populate('klijentID')
+        //.populate('klijentID')
         .exec()
         .then(result => {
             nalog = result;
 
             RadniNalogIzvrsitelj.find({ radniNalogID: uid })
-            .populate('korisnikID')
+            //.populate('korisnikID')
             .exec()
             .then(result => {
                 izvrsitelji = result;
 
                 RadniNalogMaterijal.find({ radniNalogID: uid })
-                .populate('materijalID')
+                //.populate('materijalID')
                 .exec()
                 .then(result => {
                     materijali = result;
@@ -123,8 +123,8 @@ router.get('/', (req, res, next) => {
     RadniNalog.find().exec()
         .then(nalozi => {
             for(var i=0; i<nalozi.length; i++){
-                //result.push(getRadniNalog(nalozi[i]._id));
-                result.push(nalozi[i]);
+                result.push(getRadniNalog(nalozi[i]._id));
+                //result.push(nalozi[i]);
             }
 
             res.status(200).json(result);
