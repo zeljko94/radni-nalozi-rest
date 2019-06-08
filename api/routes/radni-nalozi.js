@@ -67,8 +67,8 @@ router.post('/', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
     RadniNalog.find()
-        .populate('kreatorID')
-        .populate('klijentID')
+        //.populate('kreatorID')
+        //.populate('klijentID')
         .exec()
         .then(result => {
             res.status(200).json(result);
