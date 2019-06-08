@@ -60,13 +60,13 @@ router.post('/', (req, res, next) => {
         stavka.save();
     }
 
-    
+    /*
     res.status(200).json({
         nalog: radniNalog,
         izvrsitelji: izv,
         stavke: stavke
     });
-
+*/
 
 });
 
