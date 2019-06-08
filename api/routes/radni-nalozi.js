@@ -41,13 +41,8 @@ router.post('/', (req, res, next) => {
     }
 
     
-    res.status(200).json({
-        nalog: radniNalog,
-        izvrsitelji: izv,
-        stavke: stavke
-    });
 
-/*
+
     for(var i=0; i<stavke.length; i++){
         const stavka = new RadniNalogMaterijal({
             _id: new mongoose.Types.ObjectId(),
@@ -57,8 +52,13 @@ router.post('/', (req, res, next) => {
         });
         stvk.push(stavka);
     }
-*/
+
     
+    res.status(200).json({
+        nalog: radniNalog,
+        izvrsitelji: izv,
+        stavke: stavke
+    });
 
 
 });
