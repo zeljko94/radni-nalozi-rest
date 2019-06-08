@@ -9,18 +9,34 @@ const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
 
+function transform(data){
+    return {
+        uid: data.nalog._id,
+        datumPocetka: data.nalog.datumPocetka,
+        datumZavrsetka: data.nalog.datumZavrsetka,
+        naziv: data.nalog.naziv,
+        opis: data.nalog.opis,
+        total: data.nalog.total,
+        napomena: data.nalog.napomena,
+        klijent: data.nalog.klijentID,
+        izvrsitelji: data.izvrsitelji,
+        stavke: data.stavke
+    };
+}
+
 function getRadniNalog(uid){
     return RadniNalog.find({ _id: uid })
+        .populate('klijentID')
         .exec()
         .then(nalog => {
-            return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).exec()
+            return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).populate('korisnikID').exec()
                 .then(izvrsitelji => {
-                    return RadniNalogMaterijal.find({ radniNalogID: uid }).exec()
+                    return RadniNalogMaterijal.find({ radniNalogID: uid }).populate('materijalID', '_id naziv cijena').exec()
                         .then(materijali => {
                             return {
                                 nalog: nalog,
-                                izvrsitelji: izvrsitelji,
-                                materijali: materijali
+                                izvrsitelji: izvrsitelji.map(izv => izv.korisnikID),
+                                stavke: materijali
                             };
                         });
                 });
@@ -43,7 +59,7 @@ router.post('/', (req, res, next) => {
         datumZavrsetka: req.body.datumZavrsetka,
         total: req.body.total,
         napomena: req.body.napomena,
-        datumKreiranja: new Date(),
+        datumKreiranja: new Date().toString(),
         klijentID: klijent.uid
     });
     radniNalog.save()
@@ -70,11 +86,11 @@ router.post('/', (req, res, next) => {
                 
                     RadniNalogMaterijal.insertMany(stvk)
                         .then(result => {
-                            res.status(200).json({
-                                nalog: radniNalog,
-                                izvrsitelji: izv,
-                                stavke: stavke
-                            });
+
+                            getRadniNalog(radniNalog._id)
+                                .then(nalogObj => {
+                                    res.status(200).json({nalogObj});
+                                });
                         })
                         .catch(err => {
                             res.status(200).json(err);
@@ -112,6 +128,17 @@ router.get('/', (req, res, next) => {
                 .then(nalozi => {
                     res.status(200).json(nalozi);
                 });
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
+router.get('/normal', (req, res, next) => {
+    RadniNalog.find()
+        .exec()
+        .then(nalozi => {
+            res.status(200).json(nalozi);
         })
         .catch(err => {
             res.status(500).json({error: err});

@@ -10,7 +10,7 @@ const radniNalogSchema = mongoose.Schema({
     datumZavrsetka: { type: String },
     total: { type: Number },
     napomena: {type: String },
-    datumKreiranja: { type: Date },
+    datumKreiranja: { type: String },
     //kreatorID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 });
 
