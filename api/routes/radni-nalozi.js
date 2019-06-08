@@ -112,9 +112,7 @@ function getRadneNaloge(){
 
 
 router.get('/', (req, res, next) => {
-    var list = getRadneNaloge();
-    res.status(200).json(list);
-        
+    getRadneNaloge().then(nalozi => {  res.status(200).json(nalozi); });
 });
 
 
