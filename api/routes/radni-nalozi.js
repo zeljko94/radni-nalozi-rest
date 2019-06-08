@@ -14,7 +14,7 @@ function getRadniNalog(uid){
     var izvrsitelji = [];
     var materijali = [];
 
-    RadniNalog.find({ _id: uid })
+    return RadniNalog.find({ _id: uid })
         //.populate('klijentID')
         .exec()
         .then(result => {
