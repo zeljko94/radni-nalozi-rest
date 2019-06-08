@@ -64,7 +64,7 @@ router.post('/', (req, res, next) => {
 
 });
 
-/*
+
 router.get('/', (req, res, next) => {
     RadniNalog.find()
         .populate('kreatorID')
@@ -77,7 +77,7 @@ router.get('/', (req, res, next) => {
             res.status(500).json({error: err});
         });
 });
-
+/*
 router.delete('/:_id',  (req, res, next) => {
     const id = req.params._id;
     res.status(200).json({
