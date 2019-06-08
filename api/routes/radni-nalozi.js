@@ -14,6 +14,7 @@ function getRadniNalog(uid){
         .exec()
         .then(nalog => {
             return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).exec()
+                .populate("korisnikID")
                 .then(izvrsitelji => {
                     return {nalog: nalog, izvrsitelji: izvrsitelji};
                 })
