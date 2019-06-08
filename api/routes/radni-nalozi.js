@@ -94,15 +94,20 @@ router.post('/', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    var list = [];
-    RadniNalog.find().exec()
-        .then(nalozi => {
-            nalozi.forEach((item, i) => {
-                getRadniNalog(item).then(nalog => {
-                    list.push(nalog);
-                });
-            });
-            res.status(200).json(list);
+    var dict = {};
+    RadniNalogMaterijal.find().exec()
+        .then(materijali => {
+            for(var i=0; i<materijali.length; i++){
+                if(dict[materijali[i].radniNalogID] == undefined){
+                    dict[materijali[i].radniNalogID].materijali = [];
+                    dict[materijali[i].radniNalogID].materijali.push(materijali[i]._id);
+                }
+                else{
+                    dict[materijali[i].radniNalogID].materijali.push(materijali[i]._id);
+                }
+            }
+
+            res.status(200).json(dict);
         });
 });
 
