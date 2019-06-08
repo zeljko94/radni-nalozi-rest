@@ -98,7 +98,7 @@ router.get('/', (req, res, next) => {
     RadniNalogMaterijal.find().exec()
         .then(materijali => {
             for(var i=0; i<materijali.length; i++){
-                if(dict[materijali[i].radniNalogID] == undefined){
+                if(!dict.hasOwnProperty(materijali[i].radniNalogID)){
                     dict[materijali[i].radniNalogID].materijali = [];
                     dict[materijali[i].radniNalogID].materijali.push(materijali[i]._id);
                 }
