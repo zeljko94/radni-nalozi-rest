@@ -77,7 +77,7 @@ router.post('/', (req, res, next) => {
                     _id: new mongoose.Types.ObjectId(),
                     naslov: "Novi projekt!",
                     body: "Dodani ste kao izvršitelj na novome projektu.",
-                    korisnikID: izvrsitelj._id,
+                    korisnikID: izvrsitelj.korisnikID,
                     isRead: false,
                     datum: new Date().toString()
                 });
