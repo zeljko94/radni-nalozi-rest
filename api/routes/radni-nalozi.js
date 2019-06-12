@@ -86,6 +86,7 @@ router.post('/', (req, res, next) => {
                     naslov: "Novi projekt!",
                     body: "Dodani ste kao izvršitelj na novome projektu.",
                     korisnikID: izvrsitelj.korisnikID,
+                    radniNalogID: radniNalog._id,
                     isRead: false,
                     datum: new Date().toString()
                 });

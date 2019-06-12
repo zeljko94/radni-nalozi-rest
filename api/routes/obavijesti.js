@@ -35,5 +35,15 @@ router.patch('/open/:id', (req, res, next) => {
         });
 });
 
+router.delete('/drop',  (req, res, next) => {
+    Obavijest.deleteMany()
+        .then(result => {
+            res.status(200).json("OK");
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
 
 module.exports = router;
