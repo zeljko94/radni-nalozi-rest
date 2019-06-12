@@ -72,17 +72,17 @@ router.post('/', (req, res, next) => {
                     radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
                     korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
                 });
-/*
+
                 const obavijest = new obavijest({
                     _id: new mongoose.Types.ObjectId(),
                     naslov: "Novi projekt!",
                     body: "Dodani ste kao izvršitelj na novome projektu.",
-                    korisnikID: new mongoose.Types.ObjectId(izvrsitelj.korisnikID),
+                    korisnikID: izvrsitelj.korisnikID,
                     isRead: false,
                     datum: new Date().toString()
                 });
                 obavijesti.push(obavijest);
-                */
+                
                 izv.push(izvrsitelj);
             }
             RadniNalogIzvrsitelj.insertMany(izv)
