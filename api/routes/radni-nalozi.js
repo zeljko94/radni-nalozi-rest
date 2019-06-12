@@ -58,8 +58,8 @@ router.post('/', (req, res, next) => {
     const stavke  = req.body.materijali;
     const klijent = req.body.klijent;
     var izv = [];
-    var obavijesti = [];
     var stvk = [];
+    var obavijesti = [];
 
     const radniNalog = new RadniNalog({
         _id:   new mongoose.Types.ObjectId(),
@@ -85,8 +85,8 @@ router.post('/', (req, res, next) => {
                     _id: new mongoose.Types.ObjectId(),
                     naslov: "Novi projekt!",
                     body: "Dodani ste kao izvršitelj na novome projektu.",
-                    korisnikID: izvrsitelj.korisnikID,
-                    radniNalogID: radniNalog._id,
+                    korisnikID: new mongoose.Types.ObjectId(izvrsitelj.korisnikID),
+                    radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
                     isRead: false,
                     datum: new Date().toString()
                 });
