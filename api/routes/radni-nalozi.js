@@ -30,7 +30,7 @@ function getRadniNalog(uid){
         .populate('klijentID')
         .exec()
         .then(nalog => {
-            return RadniNalogIzvrsitelj.find({ radniNalogID: uid }).populate('korisnikID').exec()
+            return RadniNalogIzvrsitelj.find({ radniNalogID: new mongoose.Types.ObjectId(uid) }).populate('korisnikID').exec()
                 .then(izvrsitelji => {
                     return RadniNalogMaterijal.find({ radniNalogID: uid }).populate('materijalID', '_id naziv cijena').exec()
                         .then(materijali => {
@@ -113,8 +113,6 @@ router.post('/', (req, res, next) => {
                 .catch(err => {
                     res.status(500).json(err);
                 });
-            
-        
         })
         .catch(err => {
             res.status(500).json(err);
