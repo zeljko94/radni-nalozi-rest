@@ -102,13 +102,6 @@ router.post('/', (req, res, next) => {
                             getRadniNalog(radniNalog._id)
                                 .then(nalogObj => {
 
-                                    Obavijest.insertMany(obavijesti)
-                                        .then(result => {
-                                        })
-                                        .catch(err => {
-                                            res.status(200).json(err);
-                                        });
-                                        
                                         res.status(200).json(nalogObj);
                                 });
                         })
