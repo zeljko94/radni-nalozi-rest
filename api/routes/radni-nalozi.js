@@ -104,11 +104,12 @@ router.post('/', (req, res, next) => {
 
                                     Obavijest.insertMany(obavijesti)
                                         .then(result => {
-                                            res.status(200).json(nalogObj);
                                         })
                                         .catch(err => {
                                             res.status(200).json(err);
                                         });
+                                        
+                                        res.status(200).json(nalogObj);
                                 });
                         })
                         .catch(err => {
