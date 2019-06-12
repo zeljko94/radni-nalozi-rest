@@ -106,17 +106,17 @@ router.post('/', (req, res, next) => {
                                 });
                         })
                         .catch(err => {
-                            res.status(200).json(err);
+                            res.status(500).json(err);
                         });
                 })
                 .catch(err => {
-                    res.status(200).json(err);
+                    res.status(500).json(err);
                 });
             
         
         })
         .catch(err => {
-            res.status(200).json(err);
+            res.status(500).json(err);
         });
     
 });
