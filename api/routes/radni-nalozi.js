@@ -44,6 +44,14 @@ function getRadniNalog(uid){
         });
 }
 
+router.get('/:id', (req, res, next) => {
+    const id = req.params.id;
+    getRadniNalog(id)
+        .then(result => {
+            res.status(200).json(result);
+        })
+});
+
 
 router.post('/', (req, res, next) => {
     const izvrsitelji = req.body.izvrsitelji;
