@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const RadniNalog = require('../models/radni-nalog');
 const User = require('../models/user');
 const Klijent = require('../models/klijent');
+const Obavijest = require('../models/obavijest');
 const RadniNalogIzvrsitelj = require('../models/radni-nalog-izvrsitelj');
 const RadniNalogMaterijal = require('../models/radni-nalog-materijal');
 
@@ -49,6 +50,7 @@ router.post('/', (req, res, next) => {
     const stavke  = req.body.materijali;
     const klijent = req.body.klijent;
     var izv = [];
+    var obavijesti = [];
     var stvk = [];
 
     const radniNalog = new RadniNalog({
@@ -70,6 +72,16 @@ router.post('/', (req, res, next) => {
                     radniNalogID: new mongoose.Types.ObjectId(radniNalog._id),
                     korisnikID: new mongoose.Types.ObjectId(izvrsitelji[i].uid)
                 });
+
+                const obavijest = new obavijest({
+                    _id: new mongoose.Types.ObjectId(),
+                    naslov: "Novi projekt!",
+                    body: "Dodani ste kao izvršitelj na novome projektu.",
+                    korisnikID: izvrsitelj._id,
+                    isRead: false,
+                    datum: new Date().toString()
+                });
+                obavijesti.push(obavijest);
                 izv.push(izvrsitelj);
             }
             RadniNalogIzvrsitelj.insertMany(izv)
@@ -89,7 +101,14 @@ router.post('/', (req, res, next) => {
 
                             getRadniNalog(radniNalog._id)
                                 .then(nalogObj => {
-                                    res.status(200).json(nalogObj);
+
+                                    Obavijest.insertMany(obavijesti)
+                                        .then(result => {
+                                            res.status(200).json(nalogObj);
+                                        })
+                                        .catch(err => {
+                                            res.status(200).json(err);
+                                        });
                                 });
                         })
                         .catch(err => {

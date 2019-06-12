@@ -10,6 +10,7 @@ const klijentRoutes    = require('./api/routes/klijenti');
 const radniNalogRoutes = require('./api/routes/radni-nalozi');
 const radniNalogIzvrsiteljRoutes = require('./api/routes/radni-nalog-izvrsitelji');
 const radniNalogMaterijalRoutes = require('./api/routes/radni-nalog-materijali');
+const obavijestiRoutes = require('./api/routes/obavijesti');
 
 mongoose.connect('mongodb+srv://danijela-ramljak-radni-nalozi:danijela123!@cluster0-savb9.mongodb.net/test?retryWrites=true',
     {
@@ -43,6 +44,7 @@ app.use('/klijenti', klijentRoutes);
 app.use('/radni-nalozi', radniNalogRoutes);
 app.use('/radni-nalog-izvrsitelji', radniNalogIzvrsiteljRoutes);
 app.use('/radni-nalog-materijali', radniNalogMaterijalRoutes);
+app.use('/obavijesti', obavijestiRoutes);
 
 
 app.use((req, res, next) => {
