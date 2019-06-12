@@ -99,11 +99,16 @@ router.post('/', (req, res, next) => {
                 
                     RadniNalogMaterijal.insertMany(stvk)
                         .then(result => {
+                            Obavijest.insertMany(obavijesti)
+                                .then(result => {
 
-                            getRadniNalog(radniNalog._id)
-                                .then(nalogObj => {
-
-                                        res.status(200).json(nalogObj);
+                                    getRadniNalog(radniNalog._id)
+                                        .then(nalogObj => {
+                                                res.status(200).json(nalogObj);
+                                        });
+                                })
+                                .catch(err => {
+                                    res.status(500).json(err);
                                 });
                         })
                         .catch(err => {
